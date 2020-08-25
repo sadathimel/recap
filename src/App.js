@@ -3,13 +3,20 @@ import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  const [Nayoks,setNayoks] = useState([])
+  const [Nayoks, setNayoks] = useState([]);
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
       .then((data) => setNayoks(data));
   }, []);
 
+
+  const [Heros, setHero] = useState([]);
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => setHero(data));
+  },[]);
   // const Nayoks = [
   //   { name: "jasim", age: "56" },
   //   { name: "Omar sani", age: "50" },
@@ -23,6 +30,10 @@ function App() {
       {Nayoks.map((nk) => (
         <Nayok name={nk.name} age={nk.age} key={nk.id} email={nk.email}></Nayok>
       ))}
+      {Heros.map((hr)=> (
+          <Hero name ={hr.name}></Hero>
+        ) )}
+      {/* <Hero></Hero> */}
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
@@ -60,6 +71,17 @@ function Nayok(props) {
       <h1> Ami Nayok - {props.name}</h1>
       <h3> I have done 5 movies {props.age || 30} years.</h3>
       <h3> I have a email - {props.email}</h3>
+    </div>
+  );
+}
+
+function Hero(props) {
+  const heroStyle = {
+    color: "red",
+  };
+  return (
+    <div style={heroStyle}>
+      <h2>Hero name: {props.name}</h2>
     </div>
   );
 }
