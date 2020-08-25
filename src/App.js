@@ -1,20 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
 function App() {
-  const Noyoks = [
-    { name: "jasim", age: "56" },
-    { name: "Omar sani", age: "50" },
-    { name: "Bapparaj", age: "15" },
-    { name: "Sakib", age:"48"}
-  ];
+  const [Nayoks,setNayoks] = useState([])
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((res) => res.json())
+      .then((data) => setNayoks(data));
+  }, []);
+
+  // const Nayoks = [
+  //   { name: "jasim", age: "56" },
+  //   { name: "Omar sani", age: "50" },
+  //   { name: "Bapparaj", age: "15" },
+  //   { name: "Sakib", age: "48" },
+  // ];
+
   return (
     <div className="App">
       <MovieCounter></MovieCounter>
-      {
-        Noyoks.map(nk => <Noyok name={nk.name} age = {nk.age}></Noyok>)
-      }
+      {Nayoks.map((nk) => (
+        <Nayok name={nk.name} age={nk.age} key={nk.id} email={nk.email}></Nayok>
+      ))}
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
@@ -24,7 +32,7 @@ function App() {
 
 function MovieCounter() {
   const [count, setCount] = useState(0);
-  const handleClick = ()=> setCount(count + 1)
+  const handleClick = () => setCount(count + 1);
   return (
     <div>
       <button onClick={handleClick}>Add Movie</button>
@@ -37,20 +45,21 @@ function MovieCounter() {
   );
 }
 
-function MovieDisplay(props){
-return <h4>Movies i have acted:{props.movies}</h4>
+function MovieDisplay(props) {
+  return <h4>Movies i have acted:{props.movies}</h4>;
 }
 
-function Noyok(props) {
+function Nayok(props) {
   // console.log(props);
-  const noyokStyle = {
+  const nayokStyle = {
     border: "2px solid purple",
     margin: "20px",
   };
   return (
-    <div style={noyokStyle}>
-      <h1> Ami Noyok - {props.name}</h1>
+    <div style={nayokStyle}>
+      <h1> Ami Nayok - {props.name}</h1>
       <h3> I have done 5 movies {props.age || 30} years.</h3>
+      <h3> I have a email - {props.email}</h3>
     </div>
   );
 }
