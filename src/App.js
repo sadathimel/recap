@@ -1,15 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
-  const Noyoks = ['Josim', 'Depjol', 'BappaRaj']
+  const Noyoks = [
+    { name: "jasim", age: "56" },
+    { name: "Omar sani", age: "50" },
+    { name: "Bapparaj", age: "15" },
+    { name: "Sakib", age:"48"}
+  ];
   return (
     <div className="App">
-      <Noyok name={Noyoks[1]} age={56}></Noyok>
-      <Noyok name={Noyoks[0]}></Noyok>
-      <Noyok name={Noyoks[2]}></Noyok>
-      <Noyok name="Shakib khan"></Noyok>
+      <MovieCounter></MovieCounter>
+      {
+        Noyoks.map(nk => <Noyok name={nk.name} age = {nk.age}></Noyok>)
+      }
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
       </header>
@@ -17,18 +22,37 @@ function App() {
   );
 }
 
-function Noyok(props){
-  console.log(props)
+function MovieCounter() {
+  const [count, setCount] = useState(0);
+  const handleClick = ()=> setCount(count + 1)
+  return (
+    <div>
+      <button onClick={handleClick}>Add Movie</button>
+      <h3>Number of Movies:{count}</h3>
+      <MovieDisplay movies={count}></MovieDisplay>
+      <MovieDisplay movies={count + 10}></MovieDisplay>
+      <MovieDisplay movies={count + 10}></MovieDisplay>
+      <MovieDisplay movies={count + 5}></MovieDisplay>
+    </div>
+  );
+}
+
+function MovieDisplay(props){
+return <h4>Movies i have acted:{props.movies}</h4>
+}
+
+function Noyok(props) {
+  // console.log(props);
   const noyokStyle = {
-    border: '2px solid purple',
-    margin: '20px'
-  }
-  return(
+    border: "2px solid purple",
+    margin: "20px",
+  };
+  return (
     <div style={noyokStyle}>
       <h1> Ami Noyok - {props.name}</h1>
-  <h3> I have done 5 movies {props.age || 30} years.</h3>
+      <h3> I have done 5 movies {props.age || 30} years.</h3>
     </div>
-  )
+  );
 }
 
 export default App;
